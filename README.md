@@ -13,11 +13,11 @@ after that rename folder to your repository name e.g. newRepository
 - `git fetch` - to fetch your github repository
 - `git pull origin --allow-unrelated-histories` - to merge repositories so you can push it
 
-change the link to your github repository on package.json file.
+***change the link to your github repository on package.json file.***
 
 - `git push` - to push the main branch
 
-After that you need to make a gh-pages branch to deploy the project:
+***After that you need to make a gh-pages branch to deploy the project:***
 
 - `git checkout gh-pages` to create new branch
 - `git fetch` - to fetch your github repository

@@ -1,23 +1,23 @@
 {
-  "name": "parcel-tailwind-template",
+  "name": "filmoteka-szablon",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url /parcel-tailwind-template/",
+    "build": "parcel build src/index.html --public-url /filmoteka-szablon/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KrzysztofRozbicki/parcel-tailwind-template.git"
+    "url": "git+https://github.com/KrzysztofRozbicki/filmoteka-szablon.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KrzysztofRozbicki/parcel-tailwind-template/issues"
+    "url": "https://github.com/KrzysztofRozbicki/filmoteka-szablon/issues"
   },
-  "homepage": "https://github.com/KrzysztofRozbicki/parcel-tailwind-template#readme",
+  "homepage": "https://github.com/KrzysztofRozbicki/filmoteka-szablon#readme",
   "devDependencies": {
     "buffer": "^5.7.1",
     "flowbite": "^1.6.5",

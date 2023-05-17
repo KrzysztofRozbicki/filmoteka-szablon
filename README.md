@@ -1,1 +1,1 @@
-https://krzysztofrozbicki.github.io/fimoteka-szablon/
+https://krzysztofrozbicki.github.io/filmoteka-szablon/

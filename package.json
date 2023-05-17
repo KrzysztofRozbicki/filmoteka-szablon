@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/KrzysztofRozbicki/parcel-tailwind-template#readme",
   "devDependencies": {
+    "buffer": "^5.7.1",
     "flowbite": "^1.6.5",
     "parcel": "^2.8.3",
     "tailwindcss": "^3.3.2"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
   }
 }

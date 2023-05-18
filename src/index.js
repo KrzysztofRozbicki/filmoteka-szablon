@@ -37,7 +37,7 @@ const convertIdToGenre = array => {
   return string;
 };
 
-getGenre = data => data.genres.map(movie => movie.name).join(' ');
+const getGenre = data => data.genres.map(movie => movie.name).join(' ');
 
 const createMovies = data => {
   let array = data;

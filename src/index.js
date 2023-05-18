@@ -114,6 +114,7 @@ libraryBtn.addEventListener('click', () => {
   if (!searchFormEl.classList.contains('hidden')) searchFormEl.classList.toggle('hidden');
   if (libraryBoxEl.classList.contains('hidden')) libraryBoxEl.classList.toggle('hidden');
   createMovies(userMovies.watched);
+  userWatchedBtn.focus();
 });
 
 userWatchedBtn.addEventListener('click', () => createMovies(userMovies.watched));

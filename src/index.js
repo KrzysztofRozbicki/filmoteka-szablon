@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { genres } from './genres';
-import { fetchSingleMovie } from './modal';
+import { userMovies, fetchSingleMovie } from './modal';
 import { URL, IMG_URL, KEY, LANGUAGE } from './constants';
 import { createPagination } from './pagination';
 import { SearchParams } from './searchParams';
@@ -11,6 +11,9 @@ const searchInputEl = document.getElementById('search-input');
 const nextBtn = document.getElementById('next-btn');
 const previousBtn = document.getElementById('previous-btn');
 const paginationEl = document.getElementById('pagination');
+const homeBtn = document.getElementById('home-btn');
+const libraryBtn = document.getElementById('library-btn');
+const libraryBoxEl = document.getElementById('library-box');
 
 const searchParams = new SearchParams();
 
@@ -34,7 +37,14 @@ const convertIdToGenre = array => {
   return string;
 };
 
-const createMovies = array => {
+getGenre = data => data.genres.map(movie => movie.name).join(' ');
+
+const createMovies = data => {
+  let array = data;
+  let genres = '';
+  if (!!data.results) {
+    array = data.results;
+  }
   wrapperEl.innerHTML = '';
   array.forEach(movie => {
     const movieBox = document.createElement('div');
@@ -44,18 +54,17 @@ const createMovies = array => {
       ? `<img class="poster" src="${IMG_URL}${movie.poster_path}"/>`
       : '<img class="poster" src="https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-476x700.jpg"/>';
     movieBox.innerHTML += `<h3 class="movie-title">${movie.title}</h3>
-    <p class="movie-genres">${convertIdToGenre(movie.genre_ids)}</p>`;
+    <p class="movie-genres">${
+      !!data.results ? convertIdToGenre(movie.genre_ids) : getGenre(movie)
+    }</p>`;
     wrapperEl.appendChild(movieBox);
   });
+  searchParams.totalPages = data.total_pages;
+  createPagination(searchParams);
 };
 
 const fetchMovies = url => {
-  axios.get(url).then(res => {
-    console.log(res);
-    searchParams.totalPages = res.data.total_pages;
-    createMovies(res.data.results);
-    createPagination(searchParams);
-  });
+  axios.get(url).then(res => createMovies(res.data));
 };
 
 const showMovies = trending => {
@@ -83,8 +92,29 @@ searchFormEl.addEventListener('submit', event => {
   searchParams.query = searchInputEl.value;
   searchParams.trending = false;
   showMovies(searchParams.trending);
+  searchInputEl.value = '';
+});
+
+homeBtn.addEventListener('click', () => {
+  if (searchFormEl.classList.contains('hidden')) searchFormEl.classList.toggle('hidden');
+  if (!libraryBoxEl.classList.contains('hidden')) libraryBoxEl.classList.toggle('hidden');
+  searchParams.trending = true;
+  showMovies(searchParams.trending);
+  searchInputEl.value = '';
 });
 
 wrapperEl.addEventListener('click', event => {
-  fetchSingleMovie(+event.target.parentNode.dataset.id, axios);
+  fetchSingleMovie(+event.target.parentNode.dataset.id, axios).then(data => console.log(data));
 });
+
+const userWatchedBtn = document.getElementById('user-watched-btn');
+const userQueueBtn = document.getElementById('user-queue-btn');
+
+libraryBtn.addEventListener('click', () => {
+  if (!searchFormEl.classList.contains('hidden')) searchFormEl.classList.toggle('hidden');
+  if (libraryBoxEl.classList.contains('hidden')) libraryBoxEl.classList.toggle('hidden');
+  createMovies(userMovies.watched);
+});
+
+userWatchedBtn.addEventListener('click', () => createMovies(userMovies.watched));
+userQueueBtn.addEventListener('click', () => createMovies(userMovies.queued));

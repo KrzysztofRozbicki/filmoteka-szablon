@@ -14,9 +14,15 @@
         <button id="library-btn" class="nav-btn">My library</button>
       </div>
     </nav>
-    <form id="search-form">
-      <input class="search-input" id="search-input" type="text" />
-    </form>
+  
+      <form id="search-form">
+        <input class="search-input" id="search-input" type="text" />
+      </form>
+  <div id="library-box" class="library hidden">
+    <button id="user-watched-btn" class="nav-btn">WATCHED</button>
+<button id="user-queue-btn" class="nav-btn">QUEUE</button>
+  </div>
+    </div>
 
     <div id="wrapper" class="wrapper"></div>
     <div class="pagination">
@@ -24,40 +30,7 @@
       <ul id="pagination"></ul>
       <button class="pagination-element" type="button" id="next-btn">==></button>
     </div>
-    <div id="modal-backdrop" class="backdrop hidden">
-      <div class="modal">
-        <button id="close-modal-btn" type="button" class="close-modal-btn">X</button>
-        <img id="modal-image" src="./assets/default-movie-476x700.jpg" alt="" class="modal-image" />
-        <div>
-          <h3 id="modal-title" class="modal-title">TITLE</h3>
-          <div class="modal-info">
-            <div class="modal-category">
-              <p>Vote / Votes</p>
-              <p>Popularity</p>
-              <p>Original Title</p>
-              <p>Genre</p>
-            </div>
-            <div class="modal-detailed-info">
-              <p>
-                <span id="modal-ranking" class="modal-ranking">7.4</span> /
-                <span id="modal-votes">1260</span>
-              </p>
-              <p id="modal-popularity">100.2</p>
-              <p id="modal-original-title">A FISTFUL OF LEAD</p>
-              <p id="modal-genre">Western</p>
-            </div>
-          </div>
-          <article class="modal-description">
-            <h4>ABOUT</h4>
-            <p id="modal-description">This is some movie about something</p>
-          </article>
-          <div class="modal-btns">
-            <button id="watch-btn" class="nav-btn">ADD TO WATCHED</button>
-            <button id="queue-btn" class="nav-btn">ADD TO QUEUE</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="modal-backdrop" class="backdrop hidden"></div>
     <script src="index.js" type="module"></script>
   </body>
 </html>

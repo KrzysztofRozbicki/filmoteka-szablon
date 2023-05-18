@@ -171,12 +171,18 @@ body {
   border: 1px solid black;
   color: black;
 }
-.nav-btn:hover {
+.nav-btn:hover,
+.nav-btn:focus {
   background-color: orange;
   color: white;
   border: none;
 }
 
+.nav-btn:active {
+  background-color: orange;
+  color: white;
+  border: none;
+}
 .modal-btns {
   margin-top: 2rem;
   display: flex;

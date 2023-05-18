@@ -44,7 +44,7 @@ export const createPagination = object => {
     createListItem(1);
     createListItem('...');
     for (let i = page - 2; i < page + 3; i++) {
-      createListItem(i);
+      createListItem(i, page);
     }
     createListItem('...');
     createListItem(totalPages);
@@ -52,7 +52,7 @@ export const createPagination = object => {
     createListItem(1);
     createListItem('...');
     for (let i = totalPages - 4; i <= totalPages; i++) {
-      createListItem(i);
+      createListItem(i, page);
     }
   }
   setButtons(object);

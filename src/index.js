@@ -1,46 +1,30 @@
 import axios from 'axios';
 import { genres } from './genres';
-
-const URL = 'https://api.themoviedb.org/3/';
-const IMG_URL = 'https://image.tmdb.org/t/p/w500';
-const KEY = 'e33b9f687f25ca4aa510a1d82d34b03f';
-const LANGUAGE = 'en-US';
+import { fetchSingleMovie } from './modal';
+import { URL, IMG_URL, KEY, LANGUAGE } from './constants';
+import { createPagination } from './pagination';
+import { SearchParams } from './searchParams';
 
 const wrapperEl = document.getElementById('wrapper');
+const searchFormEl = document.getElementById('search-form');
+const searchInputEl = document.getElementById('search-input');
 const nextBtn = document.getElementById('next-btn');
 const previousBtn = document.getElementById('previous-btn');
 const paginationEl = document.getElementById('pagination');
-const searchFormEl = document.getElementById('search-form');
-const searchInputEl = document.getElementById('search-input');
 
-let page = 1;
-let totalPages = 0;
-let querySearch = '';
-let showTrending = true;
+const searchParams = new SearchParams();
 
 const createSearchParams = () =>
   new URLSearchParams({
-    query: querySearch,
+    query: searchParams.query,
     api_key: KEY,
     language: LANGUAGE,
     include_adult: false,
-    page: page,
+    page: searchParams.page,
   });
 
 const createSearchURL = () => `${URL}search/movie?${createSearchParams()}`;
 const createTrendingURL = () => `${URL}trending/movie/week?${createSearchParams()}`;
-
-const setButtons = () => {
-  console.log(`page: ${page}`);
-  if (page === 1) {
-    previousBtn.disabled = true;
-    nextBtn.disabled = false;
-  } else if (page > 1 && page !== totalPages) {
-    previousBtn.disabled = false;
-    nextBtn.disabled = false;
-  } else if (page === totalPages) {
-  }
-};
 
 const convertIdToGenre = array => {
   let string = '';
@@ -65,111 +49,42 @@ const createMovies = array => {
   });
 };
 
-const createListItem = i => {
-  const listItem = document.createElement('li');
-  listItem.classList.add('pagination-element');
-  listItem.innerText = i;
-  if (i === page) listItem.classList.add('current-page');
-  paginationEl.appendChild(listItem);
-};
-
-const createPagination = () => {
-  paginationEl.innerHTML = '';
-  if (page <= 3 && totalPages > 5) {
-    for (let i = 1; i <= 5; i++) {
-      createListItem(i);
-    }
-    createListItem('...');
-    createListItem(totalPages);
-  } else if (page <= 3 && totalPages <= 5) {
-    for (let i = 1; i <= totalPages; i++) {
-      createListItem(i);
-    }
-  } else if (page > 3 && page < totalPages - 3) {
-    createListItem(1);
-    createListItem('...');
-    for (let i = page - 2; i < page + 3; i++) {
-      createListItem(i);
-    }
-    createListItem('...');
-    createListItem(totalPages);
-  } else if (page >= totalPages - 3) {
-    createListItem(1);
-    createListItem('...');
-    for (let i = totalPages - 4; i <= totalPages; i++) {
-      createListItem(i);
-    }
-  }
-  setButtons();
-};
-
 const fetchMovies = url => {
   axios.get(url).then(res => {
     console.log(res);
-    totalPages = res.data.total_pages;
+    searchParams.totalPages = res.data.total_pages;
     createMovies(res.data.results);
-    createPagination();
+    createPagination(searchParams);
   });
 };
 
-const showMovies = () => {
-  showTrending ? fetchMovies(createTrendingURL()) : fetchMovies(createSearchURL());
+const showMovies = trending => {
+  trending ? fetchMovies(createTrendingURL()) : fetchMovies(createSearchURL());
 };
 
-showMovies();
+showMovies(searchParams.trending);
 paginationEl.addEventListener('click', event => {
-  if (typeof +event.target.innerText === 'number') page = +event.target.innerText;
-  showMovies();
+  if (typeof +event.target.innerText === 'number') searchParams.page = +event.target.innerText;
+  showMovies(searchParams.trending);
 });
 
 nextBtn.addEventListener('click', () => {
-  page++;
-  showMovies();
+  searchParams.incrementPage();
+  showMovies(searchParams.trending);
 });
 
 previousBtn.addEventListener('click', () => {
-  page--;
-  showMovies();
+  searchParams.decrementPage();
+  showMovies(searchParams.trending);
 });
 
 searchFormEl.addEventListener('submit', event => {
   event.preventDefault();
-  querySearch = searchInputEl.value;
-  showTrending = false;
-  showMovies();
+  searchParams.query = searchInputEl.value;
+  searchParams.trending = false;
+  showMovies(searchParams.trending);
 });
-
-const backdropEl = document.getElementById('modal-backdrop');
-const closeModalBtn = document.getElementById('close-modal-btn');
-const modalTitleEl = document.getElementById('modal-title');
-const modalRankingEl = document.getElementById('modal-ranking');
-const modalVotesEl = document.getElementById('modal-votes');
-const modalPopularityEl = document.getElementById('modal-popularity');
-const modalOriginalTitleEl = document.getElementById('modal-original-title');
-const modalGenreEl = document.getElementById('modal-genre');
-const modalDescriptionEl = document.getElementById('modal-description');
-const modalImageEl = document.getElementById('modal-image');
-
-closeModalBtn.addEventListener('click', () => {
-  backdropEl.classList.toggle('hidden');
-});
-
-const showSingleMovie = data => {
-  const genres = data.genres.map(movie => movie.name).join(' ');
-  modalImageEl.src = `${IMG_URL}${data.poster_path}`;
-  modalTitleEl.innerText = data.title;
-  modalRankingEl.innerText = data.vote_average;
-  modalVotesEl.innerText = data.vote_count;
-  modalPopularityEl.innerText = data.popularity;
-  modalOriginalTitleEl.innerText = data.original_title;
-  modalGenreEl.innerText = genres;
-  modalDescriptionEl.innerText = data.overview;
-  backdropEl.classList.toggle('hidden');
-};
-const fetchSingleMovie = id => {
-  axios.get(`${URL}movie/${id}?api_key=${KEY}`).then(res => showSingleMovie(res.data));
-};
 
 wrapperEl.addEventListener('click', event => {
-  fetchSingleMovie(+event.target.parentNode.dataset.id);
+  fetchSingleMovie(+event.target.parentNode.dataset.id, axios);
 });

@@ -7,9 +7,17 @@
     <title>Filmoteka - VH$ - Szablon</title>
   </head>
   <body>
+    <nav class="header-nav">
+      <h1 class="title">🎞️Filmoteka</h1>
+      <div class="header-btns">
+        <button id="home-btn" class="nav-btn">Home</button>
+        <button id="library-btn" class="nav-btn">My library</button>
+      </div>
+    </nav>
     <form id="search-form">
       <input class="search-input" id="search-input" type="text" />
     </form>
+
     <div id="wrapper" class="wrapper"></div>
     <div class="pagination">
       <button class="pagination-element" type="button" id="previous-btn"><==</button>
@@ -43,6 +51,10 @@
             <h4>ABOUT</h4>
             <p id="modal-description">This is some movie about something</p>
           </article>
+          <div class="modal-btns">
+            <button id="watch-btn" class="nav-btn">ADD TO WATCHED</button>
+            <button id="queue-btn" class="nav-btn">ADD TO QUEUE</button>
+          </div>
         </div>
       </div>
     </div>

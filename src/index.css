@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .wrapper {
   margin: auto;
   max-width: 1200px;
@@ -89,7 +95,7 @@
   transform: translateX(-50%) translateY(-50%);
   width: 50vw;
   height: 60vh;
-  background-color: lightgray;
+  background-color: white;
   z-index: 3;
   padding: 1.5rem;
 }
@@ -142,4 +148,37 @@
   color: white;
   padding: 0.5rem 0.8rem;
   border-radius: 50%;
+}
+
+.header-nav {
+  display: flex;
+  margin-block: 1rem;
+  width: 100vw;
+  padding-inline: 20vw;
+  justify-content: space-between;
+}
+
+.header-btns {
+  display: flex;
+  gap: 2rem;
+}
+.title {
+  font-size: 2rem;
+}
+.nav-btn {
+  padding: 0.5rem 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid black;
+  color: black;
+}
+.nav-btn:hover {
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+.modal-btns {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
 }

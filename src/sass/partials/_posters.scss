@@ -1,0 +1,77 @@
+@import '../vars';
+
+.posters {
+  padding-block: 1.25rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-direction: column;
+  &__box {
+    font-size: var(--fs-350);
+    line-height: 1rem;
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      outline: 3px solid $orange;
+      border-radius: 5px;
+    }
+  }
+  &__img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 0.625rem;
+  }
+
+  &__title {
+    text-transform: uppercase;
+  }
+
+  &__details {
+    color: $orange;
+  }
+
+  &__ranking {
+    font-size: var(--fs-300);
+    display: inline-block;
+    text-align: center;
+    color: white;
+    background-color: $orange;
+    border-radius: 5px;
+    width: 2.25rem;
+    line-height: 0.875rem;
+    height: 1rem;
+    margin-left: 0.25rem;
+  }
+}
+
+@media screen and (min-width: $tablet-size) {
+  .posters {
+    padding-block: 3.75rem;
+    gap: 2rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    &__box {
+      max-width: 336px;
+      flex-grow: 1;
+    }
+    &__img {
+      max-height: 455px;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-size) {
+  .posters {
+    gap: 1rem;
+    &__box {
+      line-height: 1.5rem;
+      max-width: 395px;
+    }
+    &__img {
+      max-height: 575px;
+      margin-bottom: 0.75rem;
+    }
+  }
+}

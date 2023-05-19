@@ -1,0 +1,22 @@
+:root {
+  --fs-300: 0.75rem; //12 px NOT CHANGED (rating for movies - posters)
+  --fs-350: 0.75rem; //12 px poster description
+  --fs-400: 0.875rem; //14px NOT CHANGED
+}
+
+$mobile-size: 30em;
+$tablet-size: 48em;
+$desktop-size: 80em;
+
+$orange: #ff6b08;
+$red: #ff001b;
+$gray: #f7f7f7;
+
+@media (min-width: $tablet-size) {
+}
+
+@media (min-width: $desktop-size) {
+  :root {
+    --fs-350: 1.25rem;
+  }
+}

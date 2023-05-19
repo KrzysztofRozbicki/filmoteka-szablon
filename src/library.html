@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./index.css" rel="stylesheet" />
+    <link href="./modern-normalize.css" rel="stylesheet" />
+    <title>Filmoteka - @Krzysztof Rozbicki</title>
+    <script src="index.js" type="module" async></script>
+  </head>
+  <body>
+    <nav class="header main">
+      <h1 class="header__title">🎞️Filmoteka</h1>
+      <div class="header__buttons">
+        <button id="home-btn" class="nav-btn">Home</button>
+        <button id="library-btn" class="nav-btn">My library</button>
+      </div>
+    </nav>
+    <form id="search-form">
+      <input class="search-input" id="search-input" type="text" />
+    </form>
+    <div id="library-box" class="library hidden">
+      <button id="user-watched-btn" class="nav-btn">WATCHED</button>
+      <button id="user-queue-btn" class="nav-btn">QUEUE</button>
+    </div>
+    <div id="wrapper" class="posters"></div>
+    <div class="pagination">
+      <button class="pagination-element" type="button" id="previous-btn"><==</button>
+      <ul id="pagination"></ul>
+      <button class="pagination-element" type="button" id="next-btn">==></button>
+    </div>
+    <div id="modal-backdrop" class="backdrop hidden"></div>
+  </body>
+</html>

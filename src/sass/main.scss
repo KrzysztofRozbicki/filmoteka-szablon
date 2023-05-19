@@ -1,0 +1,31 @@
+@import './partials/posters';
+@import './vars';
+@import './partials/header';
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: $mobile-size;
+  padding-inline: 1.25rem;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: $tablet-size) {
+  .container {
+    max-width: $tablet-size;
+    padding-inline: 2rem;
+  }
+}
+
+@media screen and (min-width: $desktop-size) {
+  .container {
+    max-width: $desktop-size;
+  }
+}
+
+.flex {
+  display: flex;
+}

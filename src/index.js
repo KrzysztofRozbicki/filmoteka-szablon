@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { genres } from './genres';
-import { userMovies, fetchSingleMovie } from './modal';
-import { URL, IMG_URL, KEY, LANGUAGE } from './constants';
-import { createPagination } from './pagination';
-import { SearchParams } from './searchParams';
+import './sass/main.scss';
+import { userMovies, fetchSingleMovie } from './scripts/modal';
+import { URL, IMG_URL, KEY, LANGUAGE } from './scripts/constants';
+import { createMovies } from './scripts/createMovies';
+import { SearchParams } from './scripts/searchParams';
 
 const wrapperEl = document.getElementById('wrapper');
 const searchFormEl = document.getElementById('search-form');
@@ -29,42 +29,8 @@ const createSearchParams = () =>
 const createSearchURL = () => `${URL}search/movie?${createSearchParams()}`;
 const createTrendingURL = () => `${URL}trending/movie/week?${createSearchParams()}`;
 
-const convertIdToGenre = array => {
-  let string = '';
-  array.forEach(
-    id => (string += `${genres.filter(genre => genre.id === id)[0].name.toString()}, `)
-  );
-  return string;
-};
-
-const getGenre = data => data.genres.map(movie => movie.name).join(' ');
-
-const createMovies = data => {
-  let array = data;
-  let genres = '';
-  if (!!data.results) {
-    array = data.results;
-  }
-  wrapperEl.innerHTML = '';
-  array.forEach(movie => {
-    const movieBox = document.createElement('div');
-    movieBox.dataset.id = movie.id;
-    movieBox.className = 'movie-box';
-    movieBox.innerHTML = movie.poster_path
-      ? `<img class="poster" src="${IMG_URL}${movie.poster_path}"/>`
-      : '<img class="poster" src="https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-476x700.jpg"/>';
-    movieBox.innerHTML += `<h3 class="movie-title">${movie.title}</h3>
-    <p class="movie-genres">${
-      !!data.results ? convertIdToGenre(movie.genre_ids) : getGenre(movie)
-    }</p>`;
-    wrapperEl.appendChild(movieBox);
-  });
-  searchParams.totalPages = data.total_pages;
-  createPagination(searchParams);
-};
-
 const fetchMovies = url => {
-  axios.get(url).then(res => createMovies(res.data));
+  axios.get(url).then(res => createMovies(res.data, searchParams));
 };
 
 const showMovies = trending => {

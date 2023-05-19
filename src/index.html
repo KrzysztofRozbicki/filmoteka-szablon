@@ -4,31 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./index.css" rel="stylesheet" />
-    <title>Filmoteka - VH$ - Szablon</title>
+    <link href="./modern-normalize.css" rel="stylesheet" />
+    <title>Filmoteka - @Krzysztof Rozbicki</title>
+    <script src="index.js" type="module" async></script>
   </head>
   <body>
-    <nav class="header-nav">
-      <h1 class="title">🎞️Filmoteka</h1>
-      <div class="header-btns">
-        <button id="home-btn" class="nav-btn">Home</button>
-        <button id="library-btn" class="nav-btn">My library</button>
-      </div>
-    </nav>
+    <include src="./partials/header-main.html"></include>
 
-    <form id="search-form">
-      <input class="search-input" id="search-input" type="text" />
-    </form>
     <div id="library-box" class="library hidden">
       <button id="user-watched-btn" class="nav-btn">WATCHED</button>
       <button id="user-queue-btn" class="nav-btn">QUEUE</button>
     </div>
-    <div id="wrapper" class="wrapper"></div>
-    <div class="pagination">
-      <button class="pagination-element" type="button" id="previous-btn"><==</button>
-      <ul id="pagination"></ul>
-      <button class="pagination-element" type="button" id="next-btn">==></button>
-    </div>
+    <div id="wrapper" class="posters container"></div>
+    <include src="./partials/pagination.html"></include>
     <div id="modal-backdrop" class="backdrop hidden"></div>
-    <script src="index.js" type="module"></script>
   </body>
 </html>

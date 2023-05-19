@@ -1,0 +1,92 @@
+@import '../vars';
+
+.header {
+  width: 100%;
+  background-image: url('../assets/images/header-main.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding-top: 2.5rem;
+  padding-bottom: 2.75rem;
+  color: white;
+  &__main {
+    margin-bottom: 3.375rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &__name {
+      display: none;
+      font-size: 1.875rem;
+    }
+  }
+  &__nav {
+    display: flex;
+    gap: 2.5rem;
+    font-size: var(--fs-300);
+    text-transform: uppercase;
+    font-weight: 500;
+    &__active {
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 14px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $red;
+      }
+    }
+  }
+
+  &__form {
+    position: relative;
+    max-width: $mobile-size;
+    margin: 0 auto;
+    &__input {
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid white;
+      padding: 0;
+      color: white;
+      &::placeholder {
+        color: white;
+      }
+    }
+    &__icon {
+      position: absolute;
+      right: 0;
+      top: 0.5rem;
+    }
+    &__error {
+      margin-top: 1rem;
+      color: $red;
+      font-size: var(--fs-400);
+      line-height: 1rem;
+      font-weight: 400;
+    }
+  }
+}
+
+@media screen and (min-width: $tablet-size) {
+  .header {
+    &__main {
+      margin-bottom: 2.5rem;
+    }
+    &__title {
+      &__name {
+        display: block;
+      }
+    }
+    &__form {
+      &__error {
+        margin-top: 1.25rem;
+      }
+    }
+  }
+}

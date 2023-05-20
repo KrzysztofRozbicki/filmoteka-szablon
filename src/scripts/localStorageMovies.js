@@ -1,6 +1,11 @@
 export class UserMovies {
   #watched = [];
   #queued = [];
+  #page = 1;
+
+  get page() {
+    return this.#page;
+  }
 
   constructor() {
     const watched = JSON.parse(localStorage.getItem('watched-movies'));

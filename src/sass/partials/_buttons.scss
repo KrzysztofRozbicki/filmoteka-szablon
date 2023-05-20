@@ -9,7 +9,7 @@
   line-height: 1rem;
   padding-top: 0.875rem;
   padding-bottom: 0.75rem;
-  max-width: 8.125rem;
+  width: 8.125rem;
   &:hover,
   &:focus {
     background-color: $orange;
@@ -30,7 +30,7 @@
 
 @media screen and (min-width: $tablet-size) {
   .button {
-    max-width: 9.5rem;
+    width: 9.5rem;
     &--modal {
       width: 7.875rem;
     }

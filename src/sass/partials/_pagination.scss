@@ -52,3 +52,10 @@
     }
   }
 }
+
+@media screen and (min-width: $tablet-size) {
+  .pagination {
+    padding-top: 0;
+    padding-bottom: 3, 75rem;
+  }
+}

@@ -6,17 +6,19 @@
     <link href="./index.css" rel="stylesheet" />
     <link href="./modern-normalize.css" rel="stylesheet" />
     <title>Filmoteka - @Krzysztof Rozbicki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Roboto:wght@400;500;700;900&family=Titan+One&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <include src="./partials/header-main.html"></include>
-
-    <div id="library-box" class="library hidden">
-      <button id="user-watched-btn" class="nav-btn">WATCHED</button>
-      <button id="user-queue-btn" class="nav-btn">QUEUE</button>
-    </div>
     <div id="wrapper" class="posters container"></div>
     <include src="./partials/pagination.html"></include>
     <div id="modal-backdrop" class="backdrop hidden"></div>
+    <include src="./partials/footer.html"></include>
     <script src="./index.js" type="module"></script>
   </body>
 </html>

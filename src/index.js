@@ -66,8 +66,7 @@ wrapperEl.addEventListener('click', event => {
 
 window.addEventListener(
   'resize',
-  debounce(() => createPagination(searchParams)),
-  300
+  debounce(() => createPagination(searchParams), 100)
 );
 
 const userWatchedBtn = document.getElementById('user-watched-btn');

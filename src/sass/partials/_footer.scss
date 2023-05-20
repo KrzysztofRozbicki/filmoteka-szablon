@@ -1,0 +1,23 @@
+@import '../vars';
+
+.footer {
+  width: 100%;
+  padding-block: 1.875rem;
+  background-color: $gray;
+  &__content {
+    text-align: center;
+    color: $darkgray;
+    font-size: var(--fs-450);
+    font-weight: 400;
+    line-height: 1.17;
+    &--link {
+      display: inline-block;
+      text-decoration: underline;
+      &:hover,
+      &:focus {
+        cursor: pointer;
+        color: black;
+      }
+    }
+  }
+}

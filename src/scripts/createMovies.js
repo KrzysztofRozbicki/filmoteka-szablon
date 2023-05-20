@@ -25,8 +25,8 @@ export const createMovies = (data, object) => {
     const movieBox = document.createElement('figure');
     movieBox.dataset.id = movie.id;
     movieBox.tabIndex = 0;
-    movieBox.setAttribute('role', 'clickable poster');
-    movieBox.setAttribute('aria-labelledby', `poster-title`);
+    movieBox.setAttribute('role', 'button');
+    movieBox.setAttribute('aria-label', `${movie.title}`);
     movieBox.className = 'posters__box';
     movieBox.innerHTML = movie.poster_path
       ? `<img class="posters__img" src="${IMG_URL}${movie.poster_path}" alt="${movie.title} poster"/>`

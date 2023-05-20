@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header header--library">
   <div class="container">
     <div class="header__main">
       <div class="header__title">
@@ -11,16 +11,20 @@
       </div>
 
       <nav class="header__nav">
-        <a href="./index.html" class="header__nav__active">HOME</a>
-        <a href="./library.html">MY LIBRARY</a>
+        <a href="./index.html">HOME</a>
+        <a href="./library.html" class="header__nav__active">MY LIBRARY</a>
       </nav>
     </div>
-    <form id="search-form" class="header__form">
+    <form id="search-form" class="header__form hidden">
       <input class="header__form__input" id="search-input" type="text" placeholder="Movie search" />
       <img class="header__form__icon" src="./assets/images/search_icon.svg" alt="search-icon" />
-      <p id="search-error" class="header__form__error waiting">
+      <p id="search-error" class="header__form__error hidden">
         Search result not successful. Enter the correct movie name and try again.
       </p>
     </form>
+    <div class="header--library__buttons">
+      <button id="user-watched-btn" class="button">WATCHED</button>
+      <button id="user-queue-btn" class="button">QUEUE</button>
+    </div>
   </div>
 </div>

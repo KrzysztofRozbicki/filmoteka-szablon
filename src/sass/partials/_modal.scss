@@ -1,0 +1,129 @@
+@import '../vars';
+
+.hidden {
+  display: none;
+}
+
+.backdrop {
+  content: '';
+  position: fixed;
+  top: -100%;
+  left: -100%;
+  right: -100%;
+  bottom: -100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.modal {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1.25rem;
+  padding-top: 3rem;
+  padding-bottom: 2.5rem;
+  width: calc($mobile-size - 2.5rem);
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.25rem;
+  background-color: white;
+  height: 100%;
+  overflow-y: scroll;
+
+  &__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__image {
+    border-radius: 5px;
+  }
+
+  &__title {
+    font-size: var(--fs-600);
+    font-weight: 500;
+    line-height: 1.17;
+    margin-block: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-300);
+    font-weight: 500;
+    line-height: 1rem;
+    margin-bottom: 0.5rem;
+    &__category {
+      color: $fontgray;
+      flex: 1 1 0px;
+    }
+    &__details {
+      &__ranking {
+        color: white;
+        background-color: $orange;
+        padding-inline: 0.625rem;
+        padding-block: 1px;
+        border-radius: 5px;
+      }
+      flex: 1 1 0px;
+    }
+  }
+
+  &__description {
+    font-size: var(--fs-300);
+    font-weight: 500;
+    line-height: 1.25rem;
+    margin-block: 1.25rem;
+    &__header {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: $tablet-size) {
+  .modal {
+    padding: 2.5rem 4.5rem 2.5rem 2.25rem;
+    flex-direction: row;
+    width: calc($tablet-size - 4rem);
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 4.25rem;
+    align-items: start;
+
+    &__image {
+      max-width: 16.5rem;
+    }
+
+    &__title {
+      margin-top: 0;
+    }
+
+    &__buttons {
+      gap: 1rem;
+      justify-content: start;
+    }
+  }
+}
+
+@media (min-width: $desktop-size) {
+  .modal {
+    padding: 2.5rem 0.75rem;
+    max-width: 50.5rem;
+    gap: 1rem;
+  }
+}

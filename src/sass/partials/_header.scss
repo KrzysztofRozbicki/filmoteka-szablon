@@ -71,6 +71,18 @@
       font-weight: 400;
     }
   }
+
+  &--library {
+    background-image: url('../assets/images/header-library.png');
+    background-size: cover;
+    padding-bottom: 3.75rem;
+    &__buttons {
+      padding-top: 0.75rem;
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+    }
+  }
 }
 
 @media screen and (min-width: $tablet-size) {
@@ -86,6 +98,11 @@
     &__form {
       &__error {
         margin-top: 1.25rem;
+      }
+    }
+    &--library {
+      &__buttons {
+        padding-top: 0;
       }
     }
   }

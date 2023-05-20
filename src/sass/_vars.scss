@@ -2,15 +2,19 @@
   --fs-300: 0.75rem; //12 px NOT CHANGED (rating for movies - posters)
   --fs-350: 0.75rem; //12 px poster description
   --fs-400: 0.875rem; //14px NOT CHANGED
+  --fs-450: 0.875rem; //14px footer
+  --fs-600: 1.25rem; //20px movie-title MODAL
 }
 
-$mobile-size: 30em;
+$mobile-size: 20em;
 $tablet-size: 48em;
 $desktop-size: 80em;
 
 $orange: #ff6b08;
 $red: #ff001b;
 $gray: #f7f7f7;
+$darkgray: #545454;
+$fontgray: #8c8c8c;
 
 @media (min-width: $tablet-size) {
 }
@@ -18,5 +22,7 @@ $gray: #f7f7f7;
 @media (min-width: $desktop-size) {
   :root {
     --fs-350: 1.25rem;
+    --fs-450: 1rem;
+    --fs-600: 1.875rem;
   }
 }

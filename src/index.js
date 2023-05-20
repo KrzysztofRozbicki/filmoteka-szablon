@@ -4,6 +4,8 @@ import { userMovies, fetchSingleMovie } from './scripts/modal';
 import { URL, IMG_URL, KEY, LANGUAGE } from './scripts/constants';
 import { createMovies } from './scripts/createMovies';
 import { SearchParams } from './scripts/searchParams';
+import { createPagination } from './scripts/pagination';
+import debounce from 'lodash.debounce';
 
 const wrapperEl = document.getElementById('wrapper');
 const searchFormEl = document.getElementById('search-form');
@@ -11,9 +13,6 @@ const searchInputEl = document.getElementById('search-input');
 const nextBtn = document.getElementById('next-btn');
 const previousBtn = document.getElementById('previous-btn');
 const paginationEl = document.getElementById('pagination');
-const homeBtn = document.getElementById('home-btn');
-const libraryBtn = document.getElementById('library-btn');
-const libraryBoxEl = document.getElementById('library-box');
 
 const searchParams = new SearchParams();
 
@@ -61,27 +60,18 @@ searchFormEl.addEventListener('submit', event => {
   searchInputEl.value = '';
 });
 
-homeBtn.addEventListener('click', () => {
-  if (searchFormEl.classList.contains('hidden')) searchFormEl.classList.toggle('hidden');
-  if (!libraryBoxEl.classList.contains('hidden')) libraryBoxEl.classList.toggle('hidden');
-  searchParams.trending = true;
-  showMovies(searchParams.trending);
-  searchInputEl.value = '';
-});
-
 wrapperEl.addEventListener('click', event => {
   fetchSingleMovie(+event.target.parentNode.dataset.id, axios).then(data => console.log(data));
 });
 
+window.addEventListener(
+  'resize',
+  debounce(() => createPagination(searchParams)),
+  300
+);
+
 const userWatchedBtn = document.getElementById('user-watched-btn');
 const userQueueBtn = document.getElementById('user-queue-btn');
-
-libraryBtn.addEventListener('click', () => {
-  if (!searchFormEl.classList.contains('hidden')) searchFormEl.classList.toggle('hidden');
-  if (libraryBoxEl.classList.contains('hidden')) libraryBoxEl.classList.toggle('hidden');
-  createMovies(userMovies.watched);
-  userWatchedBtn.focus();
-});
 
 userWatchedBtn.addEventListener('click', () => createMovies(userMovies.watched));
 userQueueBtn.addEventListener('click', () => createMovies(userMovies.queued));

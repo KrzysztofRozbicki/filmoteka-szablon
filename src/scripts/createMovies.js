@@ -26,12 +26,12 @@ export const createMovies = (data, object) => {
     movieBox.dataset.id = movie.id;
     movieBox.tabIndex = 0;
     movieBox.setAttribute('role', 'clickable poster');
-    movieBox.setAttribute('aria-label', `${movie.title}`);
+    movieBox.setAttribute('aria-labelledby', `poster-title`);
     movieBox.className = 'posters__box';
     movieBox.innerHTML = movie.poster_path
       ? `<img class="posters__img" src="${IMG_URL}${movie.poster_path}" alt="${movie.title} poster"/>`
       : '<img class="posters__img" src="https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-476x700.jpg" alt="There is no poster for this movie"/>';
-    movieBox.innerHTML += `<h3 class="posters__title">${movie.title}</h3>
+    movieBox.innerHTML += `<h3 id="poster-title" class="posters__title">${movie.title}</h3>
     <p class="posters__details">${
       !!data.results ? convertIdToGenre(movie.genre_ids) : getGenre(movie)
     } | ${movie.release_date.slice(0, 4)}</p>`;

@@ -69,8 +69,9 @@ window.addEventListener(
   debounce(() => createPagination(searchParams), 100)
 );
 
-const userWatchedBtn = document.getElementById('user-watched-btn');
-const userQueueBtn = document.getElementById('user-queue-btn');
+// // DODAĆ DO MY LIBRARY JS
+// const userWatchedBtn = document.getElementById('user-watched-btn');
+// const userQueueBtn = document.getElementById('user-queue-btn');
 
-userWatchedBtn.addEventListener('click', () => createMovies(userMovies.watched));
-userQueueBtn.addEventListener('click', () => createMovies(userMovies.queued));
+// userWatchedBtn.addEventListener('click', () => createMovies(userMovies.watched));
+// userQueueBtn.addEventListener('click', () => createMovies(userMovies.queued));

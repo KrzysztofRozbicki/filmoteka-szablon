@@ -1,5 +1,6 @@
 import { URL, IMG_URL, KEY, LANGUAGE } from './constants';
 import { UserMovies } from './localStorageMovies';
+import { TABLET_SIZE } from './constants';
 
 const backdropEl = document.getElementById('modal-backdrop');
 export const userMovies = new UserMovies();
@@ -11,11 +12,13 @@ const showSingleMovie = data => {
     : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-476x700.jpg';
   backdropEl.innerHTML = `
   <div class="container">
-    <div class="modal">
+    <div id="modal" class="modal">
         <button id="close-modal-btn" type="button" class="modal__close">X</button>
         <img id="modal-image" src="${img}" alt="${data.title}" class="modal__image" />
-        <div class="modal__text">
+        <button id="show-more" class="button modal__more" >Show more...</button>
+        <div id="modal-text" class="modal__text">
           <h3 id="modal-title" class="modal__title">${data.title}</h3>
+          
           <div class="modal__info">
               <p class="modal__info__category">Vote / Votes</p>
               <p class="modal__info__details">  <span class="modal__info__details__ranking">${data.vote_average.toFixed(
@@ -58,6 +61,31 @@ const showSingleMovie = data => {
   const queueBtn = document.getElementById('queue-btn');
   watchBtn.addEventListener('click', () => userMovies.addToWatch(data));
   queueBtn.addEventListener('click', () => userMovies.addToQueue(data));
+
+  const screenWidth = window.innerWidth;
+  const notMobile = !!(screenWidth > TABLET_SIZE);
+  const moreEl = document.getElementById('show-more');
+  const modalTextEl = document.getElementById('modal-text');
+  const modalEl = document.getElementById('modal');
+  if (screenWidth < TABLET_SIZE) {
+    let showContent = false;
+    moreEl.addEventListener('click', () => {
+      if (showContent) {
+        moreEl.innerHTML = `Show more...`;
+        modalTextEl.style.display = 'none';
+        modalEl.style.height = 'auto';
+        showContent = false;
+      } else if (!showContent) {
+        moreEl.innerHTML = `Show less`;
+        modalTextEl.style.display = 'block';
+        modalEl.style.height = '100%';
+        showContent = true;
+      }
+    });
+  } else {
+    moreEl.classList.add('hidden');
+    modalTextEl.style.display = 'block';
+  }
 };
 
 export const fetchSingleMovie = (id, axios) =>

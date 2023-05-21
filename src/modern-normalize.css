@@ -16,6 +16,10 @@ Use a better box model (opinionated).
   padding: 0;
   box-sizing: border-box;
 }
+a:visited {
+  text-decoration: none;
+  decoration: none;
+}
 
 /* resetowanie stylów */
 

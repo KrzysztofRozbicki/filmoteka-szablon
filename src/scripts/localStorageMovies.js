@@ -2,20 +2,26 @@ export class UserMovies {
   #watched = [];
   #queued = [];
   #page = 1;
-
-  get page() {
-    return this.#page;
-  }
+  #totalPages = 1;
 
   constructor() {
     const watched = JSON.parse(localStorage.getItem('watched-movies'));
     const queued = JSON.parse(localStorage.getItem('queued-movies'));
     watched ? (this.#watched = watched) : (this.#watched = []);
     queued ? (this.#queued = queued) : (this.#queued = []);
+    this.#totalPages = Math.ceil(this.#watched.length / 20);
+  }
+
+  get page() {
+    return this.#page;
   }
 
   get watched() {
     return this.#watched;
+  }
+
+  get totalPages() {
+    return this.#totalPages;
   }
 
   get queued() {
@@ -45,5 +51,13 @@ export class UserMovies {
       this.#queued.push(element);
       localStorage.setItem('queued-movies', JSON.stringify(this.#queued));
     }
+  }
+
+  incrementPage() {
+    this.#page++;
+  }
+
+  decrementPage() {
+    this.#page--;
   }
 }

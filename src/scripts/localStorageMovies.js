@@ -18,7 +18,11 @@ export class UserMovies {
 
   getArray(array) {
     let arr = [];
-    const end = this.#page * this.#moviesPerPage;
+    const arrLength = array.length;
+    let end = 0;
+
+    if (this.#page * this.#moviesPerPage > arrLength) end = this.#page * this.#moviesPerPage;
+    else end = array.length;
     const start = end - this.#moviesPerPage;
     for (let i = start; i < end; i++) {
       arr.push(array[i]);

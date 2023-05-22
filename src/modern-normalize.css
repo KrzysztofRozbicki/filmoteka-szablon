@@ -17,8 +17,8 @@ Use a better box model (opinionated).
   box-sizing: border-box;
 }
 a:visited {
+  color: inherit;
   text-decoration: none;
-  decoration: none;
 }
 
 /* resetowanie stylów */

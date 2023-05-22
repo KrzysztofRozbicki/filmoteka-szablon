@@ -3,29 +3,47 @@ export class UserMovies {
   #queued = [];
   #page = 1;
   #totalPages = 1;
+  #moviesPerPage = 20;
 
   constructor() {
     const watched = JSON.parse(localStorage.getItem('watched-movies'));
     const queued = JSON.parse(localStorage.getItem('queued-movies'));
     watched ? (this.#watched = watched) : (this.#watched = []);
     queued ? (this.#queued = queued) : (this.#queued = []);
-    this.#totalPages = Math.ceil(this.#watched.length / 20);
   }
 
   get page() {
     return this.#page;
   }
 
+  getArray(array) {
+    let arr = [];
+    const end = this.#page * this.#moviesPerPage;
+    const start = end - this.#moviesPerPage;
+    for (let i = start; i < end; i++) {
+      arr.push(array[i]);
+    }
+    return arr;
+  }
+
   get watched() {
-    return this.#watched;
+    return this.getArray(this.#watched);
+  }
+
+  get queued() {
+    return this.getArray(this.#queued);
   }
 
   get totalPages() {
     return this.#totalPages;
   }
 
-  get queued() {
-    return this.#queued;
+  setTotalPagesWatched() {
+    this.#totalPages = Math.ceil(this.#watched.length / 20);
+  }
+
+  setTotalPagesQueued() {
+    this.#totalPages = Math.ceil(this.#queued.length / 20);
   }
 
   isAdded(element, array) {

@@ -20,7 +20,6 @@ export const createMovies = (data, object) => {
     array = data.results;
   }
   wrapperEl.innerHTML = '';
-  console.log(array);
 
   array.forEach(movie => {
     const movieBox = document.createElement('figure');

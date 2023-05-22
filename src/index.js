@@ -5,6 +5,7 @@ import { URL, IMG_URL, KEY, LANGUAGE } from './scripts/constants';
 import { createMovies } from './scripts/createMovies';
 import { SearchParams } from './scripts/searchParams';
 import { createPagination } from './scripts/pagination';
+import { loaderHTML } from './scripts/showLoader';
 import debounce from 'lodash.debounce';
 
 const wrapperEl = document.getElementById('wrapper');
@@ -13,6 +14,7 @@ const searchInputEl = document.getElementById('search-input');
 const nextBtn = document.getElementById('next-btn');
 const previousBtn = document.getElementById('previous-btn');
 const paginationEl = document.getElementById('pagination');
+const searchErrorEl = document.getElementById('search-error');
 
 const searchParams = new SearchParams();
 
@@ -28,11 +30,19 @@ const createSearchParams = () =>
 const createSearchURL = () => `${URL}search/movie?${createSearchParams()}`;
 const createTrendingURL = () => `${URL}trending/movie/week?${createSearchParams()}`;
 
-const fetchMovies = url => {
-  axios.get(url).then(res => createMovies(res.data, searchParams));
+const fetchMovies = async url => {
+  try {
+    wrapperEl.innerHTML = loaderHTML;
+    const response = await axios.get(url);
+    console.log(response.data.results);
+    if (response.data.results.length === 0) throw new Error();
+    createMovies(response.data, searchParams);
+  } catch (error) {
+    searchErrorEl.classList.remove('waiting');
+  }
 };
 
-const showMovies = trending => {
+const showMovies = async trending => {
   trending ? fetchMovies(createTrendingURL()) : fetchMovies(createSearchURL());
 };
 
@@ -54,6 +64,7 @@ previousBtn.addEventListener('click', () => {
 
 searchFormEl.addEventListener('submit', event => {
   event.preventDefault();
+  searchErrorEl.classList.add('waiting');
   searchParams.query = searchInputEl.value;
   searchParams.trending = false;
   showMovies(searchParams.trending);
@@ -61,7 +72,7 @@ searchFormEl.addEventListener('submit', event => {
 });
 
 wrapperEl.addEventListener('click', event => {
-  fetchSingleMovie(+event.target.parentNode.dataset.id, axios).then(data => console.log(data));
+  fetchSingleMovie(+event.target.parentNode.dataset.id, axios);
 });
 
 window.addEventListener(

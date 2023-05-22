@@ -43,7 +43,7 @@ previousBtn.addEventListener('click', () => {
 });
 
 wrapperEl.addEventListener('click', event => {
-  fetchSingleMovie(+event.target.parentNode.dataset.id, axios).then(data => console.log(data));
+  fetchSingleMovie(+event.target.parentNode.dataset.id, axios);
 });
 
 window.addEventListener(

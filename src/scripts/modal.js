@@ -1,9 +1,8 @@
 import { URL, IMG_URL, KEY, LANGUAGE } from './constants';
-import { UserMovies } from './localStorageMovies';
 import { TABLET_SIZE } from './constants';
+import { setModalButtons } from './setUserMovies';
 
 const backdropEl = document.getElementById('modal-backdrop');
-export const userMovies = new UserMovies();
 
 const showSingleMovie = data => {
   const genres = data.genres.map(movie => movie.name).join(' ');
@@ -57,13 +56,9 @@ const showSingleMovie = data => {
     backdropEl.classList.toggle('hidden');
   });
 
-  const watchBtn = document.getElementById('watch-btn');
-  const queueBtn = document.getElementById('queue-btn');
-  watchBtn.addEventListener('click', () => userMovies.addToWatch(data));
-  queueBtn.addEventListener('click', () => userMovies.addToQueue(data));
+  setModalButtons(data);
 
   const screenWidth = window.innerWidth;
-  const notMobile = !!(screenWidth > TABLET_SIZE);
   const moreEl = document.getElementById('show-more');
   const modalTextEl = document.getElementById('modal-text');
   const modalEl = document.getElementById('modal');

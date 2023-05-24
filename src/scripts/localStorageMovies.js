@@ -1,25 +1,26 @@
 export class UserMovies {
-  #watched = [];
-  #queued = [];
+  //tablica w której przechowywane są filmy zapisane przez użytkownika
+  #movies = [];
+  //tworzy zmienne do paginacji
   #page = 1;
   #totalPages = 1;
   #moviesPerPage = 20;
 
+  //konstruktor pobiera z localStorage dane i zapisuje je do tablicy, jeśli ich nie ma tworzy pustą tablicę.
   constructor() {
-    const watched = JSON.parse(localStorage.getItem('watched-movies'));
-    const queued = JSON.parse(localStorage.getItem('queued-movies'));
-    watched ? (this.#watched = watched) : (this.#watched = []);
-    queued ? (this.#queued = queued) : (this.#queued = []);
+    const movies = JSON.parse(localStorage.getItem('movies'));
+    movies ? (this.#movies = movies) : (this.#movies = []);
   }
 
+  //zwraca stronę - do paginacji
   get page() {
     return this.#page;
   }
 
+  //Tworzy tablicę 20 filmów do paginacji.
   getArray(array) {
     let arr = [];
     const arrLength = array.length;
-    console.log(arrLength);
     let end = 0;
     let start = 0;
     if (this.#page * this.#moviesPerPage > arrLength) end = arrLength;
@@ -33,55 +34,58 @@ export class UserMovies {
     return arr;
   }
 
-  get watched() {
-    return this.getArray(this.#watched);
+  //Zwraca tablicę 20 filmów do paginacji.
+  getMovies(type) {
+    return this.getArray(this.#movies);
   }
 
-  get queued() {
-    return this.getArray(this.#queued);
-  }
-
+  // zwraca ilość total pages do paginacji
   get totalPages() {
     return this.#totalPages;
   }
 
-  setTotalPagesWatched() {
-    this.#totalPages = Math.ceil(this.#watched.length / 20);
+  // Ustala total Pages do paginacji
+  setTotalPages() {
+    this.#totalPages = Math.ceil(this.#movies.length / 20);
   }
 
-  setTotalPagesQueued() {
-    this.#totalPages = Math.ceil(this.#queued.length / 20);
-  }
-
-  isAdded(element, array) {
+  //metoda sprawdza czy dany film nie jest już w localStorage zmienia mu typ w zależności od potrzeby oraz jeśli warunki są odpowiednie wrzuca go do local storage.
+  checkMovie(movie, array, type) {
+    movie.type = type;
     for (let i = 0; i < array.length; i++) {
-      if (+array[i].id === +element.id) {
-        return false;
+      if (+array[i].id === +movie.id) {
+        if (array[i].type === type) {
+          return;
+        }
+        this.#movies[i].type = type;
+        localStorage.setItem('movies', JSON.stringify(this.#movies));
+        return;
       }
     }
-    return true;
+    this.#movies.push(movie);
+    localStorage.setItem('movies', JSON.stringify(this.#movies));
   }
 
-  addToWatch(element) {
-    console.log(element.title);
-    if (this.isAdded(element, this.#watched)) {
-      this.#watched.push(element);
-      localStorage.setItem('watched-movies', JSON.stringify(this.#watched));
-    }
+  //metoda dodaje podstawowe informacje o filmie do bazy danych;
+  addMovie(element, type) {
+    const movie = {
+      id: element.id,
+      title: element.title,
+      poster_path: element.poster_path,
+      vote_average: element.vote_average,
+      release_date: element.release_date,
+      genre_ids: element.genres.map(genre => genre.id),
+    };
+    type === 'watched' ? (movie.type = 'watched') : (movie.type = 'queued');
+    this.checkMovie(movie, this.#movies, type);
   }
 
-  addToQueue(element) {
-    console.log(element.title);
-    if (this.isAdded(element, this.#queued)) {
-      this.#queued.push(element);
-      localStorage.setItem('queued-movies', JSON.stringify(this.#queued));
-    }
-  }
-
+  //metoda zwieksza strone (do paginacji)
   incrementPage() {
     this.#page++;
   }
 
+  //metoda zmniejsza strone (do paginacji)
   decrementPage() {
     this.#page--;
   }

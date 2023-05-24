@@ -4,6 +4,7 @@
 // DODANIE METOD ODCZYTYWANIA I ZAPISYWANIA / AKTUALIZACJI BAZY DANYCH
 // POWIĄZANIE Z BUTTONAMI DO DODAWANIA I ODCZYTYWANIA
 
+import { dialogBehavior } from './signInDialog';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -46,6 +47,10 @@ const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const resetBtn = document.getElementById('reset-btn');
 const googleBtn = document.getElementById('google-btn');
+const dialogLoginEl = document.getElementById('dialog-login');
+const libraryEl = document.getElementById('library-link');
+const signInEl = document.getElementById('sign-in');
+const signOutEl = document.getElementById('logout-btn');
 
 //Funkcja zeruje wartości email i password
 const resetFields = () => {
@@ -53,23 +58,42 @@ const resetFields = () => {
   userPasswordEl.value = '';
 };
 
+export const reloadHeader = async () => {
+  const logged = await checkUserState();
+  if (logged) {
+    libraryEl.classList.remove('hidden');
+    signInEl.classList.add('hidden');
+    signOutEl.classList.remove('hidden');
+  } else {
+    libraryEl.classList.add('hidden');
+    signInEl.classList.remove('hidden');
+    signOutEl.classList.add('hidden');
+    dialogBehavior();
+  }
+};
+
 //Funkcja sprawdza czy użytkownik jest zalogowany czy nie
-const checkUserState = () => {
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, user => {
+const checkUserState = async () => {
+  try {
+    const auth = getAuth();
+    const user = await new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(auth, resolve);
+      // Unsubscribe the listener after the initial state check
+      unsubscribe();
+    });
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
+      // User is signed in
       console.log('USER LOGGED');
-      console.log(user);
-      // ...
+      return true;
     } else {
+      // User is not signed in
       console.log('USER NOT LOGGED');
-      // User is signed out
-      // ...
+      return false;
     }
-  });
+  } catch (error) {
+    console.error('Error checking user state:', error);
+    throw error;
+  }
 };
 
 //Funkcja zapisuje użytkownika do bazy danych
@@ -89,32 +113,32 @@ const saveUserToDatabase = (user, email) => {
 };
 
 //Jedyna funkcja eksportowa - ustala addEventListenery oraz co mają robić i jak reagowaćz Firbease
-export const setRegisterAndSinUp = () => {
+export const setRegisterAndSignUp = () => {
   //od razu po załadowaniu strony  sprawdza czy użytkownik jest zalogowany czy nie
-  checkUserState();
 
   //funkcja rejestracji, rejestruje użytkownika, dodaje go do bazy danych
   registerBtn.addEventListener('click', event => {
-    event.preventDefault();
+    //event.preventDefault();
     createUserWithEmailAndPassword(auth, userEmailEl.value, userPasswordEl.value).then(
       userCredential => {
         const user = userCredential.user;
         saveUserToDatabase(user, userEmailEl.value);
         resetFields();
-        checkUserState();
+        dialogLoginEl.close();
       }
     );
   });
 
   //funkcja logowania użytkownika poprzez email i hasło
   loginBtn.addEventListener('click', event => {
-    event.preventDefault();
+    //event.preventDefault();
     signInWithEmailAndPassword(auth, userEmailEl.value, userPasswordEl.value)
       .then(userCredential => {
         const user = userCredential.user;
         alert(user.email + ' login successfuly!');
         resetFields();
-        checkUserState();
+        reloadHeader();
+        dialogLoginEl.close();
       })
       .catch(error => {
         alert(error.message);
@@ -123,22 +147,23 @@ export const setRegisterAndSinUp = () => {
 
   //funkcja wylogowywania użytkownika
   logoutBtn.addEventListener('click', event => {
-    event.preventDefault();
-    signOut(auth).then(() => alert('log out successful!'));
-    checkUserState();
+    //event.preventDefault();
+    signOut(auth).then(() => {
+      alert('log out successful!');
+      reloadHeader();
+    });
   });
 
   //Funkcja resetowania hasła
 
   resetBtn.addEventListener('click', event => {
-    event.preventDefault();
+    //event.preventDefault();
     sendPasswordResetEmail(auth, userEmailEl.value).then(() => alert('password reset email sent'));
-    checkUserState();
   });
 
   //Funkcja logowania przez Google
   googleBtn.addEventListener('click', event => {
-    event.preventDefault();
+    //event.preventDefault();
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(result => {
@@ -148,7 +173,8 @@ export const setRegisterAndSinUp = () => {
         // The signed-in user info.
         const user = result.user;
         saveUserToDatabase(user, user.email);
-        checkUserState();
+        reloadHeader();
+        dialogLoginEl.close();
       })
       .catch(error => {
         // Handle Errors here.

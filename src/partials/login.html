@@ -1,4 +1,4 @@
-<form>
+<!-- <form>
   <div>
     <input id="user-email" type="email" placeholder="email" />
     <input id="user-password" type="password" placeholder="password" />
@@ -8,4 +8,32 @@
   <button id="logout-btn">SIGN OUT</button>
   <button id="reset-btn">RESET PASSWORD</button>
   <button id="google-btn">LOG IN WITH GOOGLE</button>
-</form>
+</form> -->
+
+<dialog id="dialog-login">
+  <div class="container">
+    <div id="modal" class="modal sign-in">
+      <button id="close-dialog-btn" type="button" class="modal__close">X</button>
+      <include src="./partials/googleButton.html"></include>
+      <div class="sign-in">
+        <form class="sign-in__inputs">
+          <input id="user-email" type="email" placeholder="email" />
+          <input id="user-password" type="password" placeholder="password" />
+        </form>
+        <button id="login-btn" class="button">SIGN IN</button>
+        <p id="register-info">
+          If you don`t have account please:
+          <span id="register-link" class="sign-in__link">register</span>
+        </p>
+        <button id="register-btn" class="button hidden">REGISTER</button>
+
+        <button id="reset-btn" class="button hidden">RESET PASSWORD</button>
+        <p id="reset-info">
+          If you don`t remember the password please:
+          <span id="reset-link" class="sign-in__link">reset password</span>
+        </p>
+        <p id="goback-info" class="sign-in__link hidden">Go back to standard login.</p>
+      </div>
+    </div>
+  </div>
+</dialog>

@@ -6,6 +6,7 @@ import { createMovies } from './scripts/createMovies';
 import { SearchParams } from './scripts/searchParams';
 import { createPagination } from './scripts/pagination';
 import { loaderHTML } from './scripts/showLoader';
+import { reloadHeader, setRegisterAndSignUp } from './scripts/firebase';
 import debounce from 'lodash.debounce';
 
 const wrapperEl = document.getElementById('wrapper');
@@ -16,6 +17,8 @@ const previousBtn = document.getElementById('previous-btn');
 const paginationEl = document.getElementById('pagination');
 const searchErrorEl = document.getElementById('search-error');
 
+reloadHeader();
+setRegisterAndSignUp();
 const searchParams = new SearchParams();
 
 const createSearchParams = () =>
@@ -34,7 +37,6 @@ const fetchMovies = async url => {
   try {
     wrapperEl.innerHTML = loaderHTML;
     const response = await axios.get(url);
-    console.log(response.data.results);
     if (response.data.results.length === 0) throw new Error();
     createMovies(response.data, searchParams);
   } catch (error) {

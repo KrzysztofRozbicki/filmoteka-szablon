@@ -53,6 +53,6 @@ const userQueueBtn = document.getElementById('user-queue-btn');
 
 ////////////////////////////////////////
 
-import { setRegisterAndSinUp } from './scripts/firebase';
+import { setRegisterAndSignUp } from './scripts/firebase';
 
-setRegisterAndSinUp();
+setRegisterAndSignUp();
